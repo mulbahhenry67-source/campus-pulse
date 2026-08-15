@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  * {
+    @apply border-pulse-100;
+  }
+  html.dark * {
+    @apply border-pulse-800;
+  }
+  body {
+    @apply bg-paper dark:bg-midnight dark:text-paper transition-colors;
+  }
+  ::selection {
+    @apply bg-ember-300 text-midnight;
+  }
+  /* Respect reduced-motion preferences everywhere. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  /* Visible keyboard focus everywhere, not just default browser outlines. */
+  :focus-visible {
+    outline: 2px solid #5b2a9e;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
