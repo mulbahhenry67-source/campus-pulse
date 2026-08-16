@@ -1,3 +1,5 @@
+const API_BASE = import.meta.env.VITE_API_URL ?? "";
+
 /**
  * The access token lives in memory only (a module-level variable), never in
  * localStorage — that avoids exposing it to XSS-injected scripts. The
@@ -27,7 +29,7 @@ let refreshPromise: Promise<boolean> | null = null;
 async function refreshAccessToken(): Promise<boolean> {
   // Coalesce concurrent 401s into a single refresh call.
   if (!refreshPromise) {
-    refreshPromise = fetch("/api/auth/refresh", { method: "POST", credentials: "include" })
+    refreshPromise = fetch(`${API_BASE}/api/auth/refresh`, { method: "POST", credentials: "include" })
       .then(async (res) => {
         if (!res.ok) return false;
         const data = await res.json();
@@ -50,7 +52,7 @@ interface RequestOptions {
 
 export async function apiFetch<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const doFetch = async () =>
-    fetch(path, {
+    fetch(`${API_BASE}${path}`, {
       method: options.method ?? "GET",
       credentials: "include",
       headers: {

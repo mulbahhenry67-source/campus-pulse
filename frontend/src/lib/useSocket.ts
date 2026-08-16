@@ -30,7 +30,8 @@ export function useCampusPulseSocket(enabled: boolean) {
     if (!token || !enabled) return;
 
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const socket = new WebSocket(`${protocol}//${window.location.host}/ws?token=${token}`);
+    const wsHost = (import.meta.env.VITE_API_URL || window.location.origin).replace(/^https?:\/\//, "");
+    const socket = new WebSocket(`${protocol}//${wsHost}/ws?token=${token}`);
     socketRef.current = socket;
 
     socket.onopen = () => {
