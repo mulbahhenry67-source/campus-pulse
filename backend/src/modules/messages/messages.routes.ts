@@ -14,7 +14,7 @@ conversationsRouter.get(
   authenticate,
   asyncHandler(async (req, res) => {
     const items = await messagesService.listConversations(req.user!.id);
-    res.json({ items });
+    return res.json({ items });
   }),
 );
 
@@ -25,7 +25,7 @@ conversationsRouter.get(
     const q = String(req.query.q ?? "").trim();
     if (!q) return res.json({ items: [] });
     const items = await messagesService.searchConversations(req.user!.id, q);
-    res.json({ items });
+    return res.json({ items });
   }),
 );
 

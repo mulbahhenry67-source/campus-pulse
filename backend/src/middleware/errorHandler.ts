@@ -40,7 +40,7 @@ export function errorHandler(err: unknown, req: Request, res: Response, _next: N
 
   logger.error({ err, requestId, path: req.path }, "Unhandled error");
 
-  res.status(500).json({
+  return res.status(500).json({
     error: {
       code: "INTERNAL_ERROR",
       message: "Something went wrong on our end. Please try again.",
