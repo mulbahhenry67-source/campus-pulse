@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { AnyZodObject, ZodError } from "zod";
+import { z, ZodError } from "zod";
 import { AppError } from "./errorHandler";
 
 /** Validates req.body (or another part of the request) against a zod schema. */
-export function validateBody(schema: AnyZodObject) {
+export function validateBody(schema: z.ZodTypeAny) {
   return (req: Request, _res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.body);
     if (!result.success) {
@@ -15,7 +15,7 @@ export function validateBody(schema: AnyZodObject) {
 }
 
 /** Validates req.query against a zod schema (coercing strings to numbers/booleans as needed). */
-export function validateQuery(schema: AnyZodObject) {
+export function validateQuery(schema: z.ZodTypeAny) {
   return (req: Request, _res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.query);
     if (!result.success) {
